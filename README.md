@@ -12,7 +12,7 @@ Python XPath scraper for https://coronavirus.data.gov.uk/
 
 `getCases7DaysIncDec()` - Returns the increase/decrease in COVID-19 cases over the last 7 days
 
-`getCases7DaysIncDecPercentage()` - Returns the previous 7 day percentage increase/decrease in COVID-19 cases
+`getCases7DaysIncDecPercentage()` - Returns the previous 7 days percentage increase/decrease in COVID-19 cases
 
 **COVID-19 Death Data**
 
@@ -20,8 +20,16 @@ Python XPath scraper for https://coronavirus.data.gov.uk/
 
 `getDeaths7DaysIncDec()` - Returns the increase/decrease in COVID-19 death over the last 7 days
 
-`getDeaths7DaysIncDecPercentage()` - Returns the previous 7 day percentage increase/decrease in COVID-19 deaths
+`getDeaths7DaysIncDecPercentage()` - Returns the previous 7 days percentage increase/decrease in COVID-19 deaths
 
 **Vaccination Data**
 
 `getVaccinationsSecondDosePercentage()` - Returns the percentage total of the UK population (persons aged 12+) that has received a second dose/completed 1 full course of vaccination (i.e. J&J)
+
+**Hospital Admissions Data**
+
+`getDailyHospitalAdmissions()` - Returns the number of hospital admissions related to COVID-19 over the last 24 hour period
+
+`getHospitalAdmissions7DaysIncDec()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days
+
+`getHospitalAdmissions7DaysIncDecPercentage()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days as a percentage
