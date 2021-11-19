@@ -33,3 +33,7 @@ Python XPath scraper for https://coronavirus.data.gov.uk/
 `getHospitalAdmissions7DaysIncDec()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days
 
 `getHospitalAdmissions7DaysIncDecPercentage()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days as a percentage
+
+**Dashboard Misc.**
+
+`getDashboardAnnouncementsBanner()` - Returns the announcements banner text (if there are any announcements such as delays to data etc.)

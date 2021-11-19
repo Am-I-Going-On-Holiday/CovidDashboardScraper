@@ -45,5 +45,12 @@ def getHospitalAdmissions7DaysIncDecPercentage():
     prev7DaysAdmissionsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     return prev7DaysAdmissionsIncDecPercent[0]
 
+def getDashboardAnnouncementsBanner():
+    dashboardAnnouncementIssueType = tree.xpath('/html/body/ul/li/div/strong/text()')
+    dashboardAnnouncementDate = tree.xpath('/html/body/ul/li/div/time/text()')
+    dashboardAnnouncementText = tree.xpath('/html/body/ul/li/div/text()')
+    dashboardAnnouncement = "{}: {}{}".format(dashboardAnnouncementIssueType[0].capitalize(), dashboardAnnouncementDate[0], dashboardAnnouncementText[0])
+    return dashboardAnnouncement
+
 #Example
-#print(getDailyHospitalAdmissions())
+print(getDashboardAnnouncementsBanner())
