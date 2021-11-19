@@ -21,3 +21,7 @@ Python XPath scraper for https://coronavirus.data.gov.uk/
 `getDeaths7DaysIncDec()` - Returns the increase/decrease in COVID-19 death over the last 7 days
 
 `getDeaths7DaysIncDecPercentage()` - Returns the previous 7 day percentage increase/decrease in COVID-19 deaths
+
+**Vaccination Data**
+
+`getVaccinationsSecondDosePercentage()` - Returns the percentage total of the UK population (persons aged 12+) that has received a second dose/completed 1 full course of vaccination (i.e. J&J)

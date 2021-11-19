@@ -29,5 +29,9 @@ def getDeaths7DaysIncDecPercentage():
     prev7DaysDeathsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     return prev7DaysDeathsIncDecPercent[0]
 
+def getVaccinationsSecondDosePercentage():
+    vaccinationSDPercentage = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
+    return vaccinationSDPercentage[0]
+
 #Example
 #print(getDeaths7DaysIncDec())
