@@ -49,8 +49,13 @@ def getDashboardAnnouncementsBanner():
     dashboardAnnouncementIssueType = tree.xpath('/html/body/ul/li/div/strong/text()')
     dashboardAnnouncementDate = tree.xpath('/html/body/ul/li/div/time/text()')
     dashboardAnnouncementText = tree.xpath('/html/body/ul/li/div/text()')
-    dashboardAnnouncement = "{}: {}{}".format(dashboardAnnouncementIssueType[0].capitalize(), dashboardAnnouncementDate[0], dashboardAnnouncementText[0])
-    return dashboardAnnouncement
+
+    if (dashboardAnnouncementIssueType[0] != "data issue"):
+        dashboardAnnouncement = None
+        return dashboardAnnouncement
+    else:
+        dashboardAnnouncement = "{}: {}{}".format(dashboardAnnouncementIssueType[0].capitalize(), dashboardAnnouncementDate[0], dashboardAnnouncementText[0])
+        return dashboardAnnouncement
 
 #Example
 print(getDashboardAnnouncementsBanner())
