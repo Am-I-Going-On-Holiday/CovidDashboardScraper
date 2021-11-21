@@ -1,7 +1,13 @@
 from lxml import html
 import requests
+import datetime
 
-scraperHeaders = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"}
+scraperHeaders = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Refer": "https://gov.uk"
+}
+
 scraperEndpoint = requests.get('https://coronavirus.data.gov.uk/', headers=scraperHeaders)
 tree = html.fromstring(scraperEndpoint.content)
 
@@ -47,15 +53,30 @@ def getHospitalAdmissions7DaysIncDecPercentage():
 
 def getDashboardAnnouncementsBanner():
     dashboardAnnouncementIssueType = tree.xpath('/html/body/ul/li/div/strong/text()')
+
+    # If there are no banner announcements, return none
+    if not dashboardAnnouncementIssueType:
+        dashboardAnnouncement = None
+        return dashboardAnnouncement
+
     dashboardAnnouncementDate = tree.xpath('/html/body/ul/li/div/time/text()')
     dashboardAnnouncementText = tree.xpath('/html/body/ul/li/div/text()')
 
-    if (dashboardAnnouncementIssueType[0] != "data issue"):
+    # If the announcement does not relate to a data issue, return none
+    if dashboardAnnouncementIssueType[0] != "data issue":
         dashboardAnnouncement = None
         return dashboardAnnouncement
     else:
         dashboardAnnouncement = "{}: {}{}".format(dashboardAnnouncementIssueType[0].capitalize(), dashboardAnnouncementDate[0], dashboardAnnouncementText[0])
         return dashboardAnnouncement
 
+def getDashboardLastUpdate():
+    dashboardLastUpdateTimeStamp = tree.xpath('//*[@id="last-update"]/time/@datetime')
+    timestamp = dashboardLastUpdateTimeStamp[0]
+    #return dashboardLastUpdateTimeStamp[0]
+    #dashboardUpdate = datetime.datetime.strptime(dashboardLastUpdateTimeStamp[0], "%Y-%m-%dT%H:%M:%SZ")
+    #dashboardUpdate = datetime.date.fromisoformat(timestamp)
+    #return dashboardUpdate
+
 #Example
-print(getDashboardAnnouncementsBanner())
+print(getDeaths7DaysIncDec())
