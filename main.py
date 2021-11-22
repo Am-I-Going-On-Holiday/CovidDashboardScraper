@@ -44,11 +44,11 @@ def getDailyHospitalAdmissions():
     return admissionsDaily[0]
 
 def getHospitalAdmissions7DaysIncDec():
-    prev7DaysAdmissionsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysAdmissionsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
     return prev7DaysAdmissionsIncDec[0]
 
 def getHospitalAdmissions7DaysIncDecPercentage():
-    prev7DaysAdmissionsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysAdmissionsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     return prev7DaysAdmissionsIncDecPercent[0]
 
 def getDashboardAnnouncementsBanner():
@@ -79,4 +79,4 @@ def getDashboardLastUpdate():
     #return dashboardUpdate
 
 #Example
-print(getDeaths7DaysIncDec())
+#print(getHospitalAdmissions7DaysIncDec())
