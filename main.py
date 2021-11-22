@@ -1,6 +1,7 @@
 from lxml import html
 import requests
 import datetime
+import iso8601
 
 scraperHeaders = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
@@ -73,10 +74,9 @@ def getDashboardAnnouncementsBanner():
 def getDashboardLastUpdate():
     dashboardLastUpdateTimeStamp = tree.xpath('//*[@id="last-update"]/time/@datetime')
     timestamp = dashboardLastUpdateTimeStamp[0]
-    #return dashboardLastUpdateTimeStamp[0]
-    #dashboardUpdate = datetime.datetime.strptime(dashboardLastUpdateTimeStamp[0], "%Y-%m-%dT%H:%M:%SZ")
-    #dashboardUpdate = datetime.date.fromisoformat(timestamp)
-    #return dashboardUpdate
+    parsedISOTimestamp = iso8601.parse_date(timestamp)
+    finalTimeStamp = datetime.datetime.strftime(parsedISOTimestamp, "%d/%m/%Y at %H:%M (GMT)")
+    return finalTimeStamp
 
 #Example
-#print(getHospitalAdmissions7DaysIncDec())
+print(getDashboardLastUpdate())
