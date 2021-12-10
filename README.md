@@ -1,6 +1,8 @@
 # Covid Dashboard Scraper
 
-Python XPath scraper for https://coronavirus.data.gov.uk/
+Python XPath scraper for https://coronavirus.data.gov.uk/ - Functions in this script are used in the application backend
+
+Contact: p2533140@my365.dmu.ac.uk // dom@dominic.sk
 
 ***
 
@@ -37,3 +39,5 @@ Python XPath scraper for https://coronavirus.data.gov.uk/
 **Dashboard Misc.**
 
 `getDashboardAnnouncementsBanner()` - Returns the announcements banner text (if there are any announcements such as delays to data etc.)
+
+`getDashboardLastUpdate()` - Returns the timestamp of the last update to the dashboard (coverted from an ISO8601 format->DD/MM/YYYY HH:MM)
