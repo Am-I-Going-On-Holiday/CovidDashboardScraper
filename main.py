@@ -18,10 +18,14 @@ def getDailyCases():
 
 def getCases7DaysIncDec():
     prev7DaysCasesIncDec = tree.xpath('//*[@id="main-content"]/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    if not prev7DaysCasesIncDec:
+        return 0
     return prev7DaysCasesIncDec[0]
 
 def getCases7DaysIncDecPercentage():
     prev7DaysCasesIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    if not prev7DaysCasesIncDecPercent:
+        return 0
     return prev7DaysCasesIncDecPercent[0]
 
 def getDailyDeaths():
@@ -30,10 +34,14 @@ def getDailyDeaths():
 
 def getDeaths7DaysIncDec():
     prev7DaysDeathsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    if not prev7DaysDeathsIncDec:
+        return 0
     return prev7DaysDeathsIncDec[0]
 
 def getDeaths7DaysIncDecPercentage():
     prev7DaysDeathsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    if not prev7DaysDeathsIncDecPercent:
+        return 0
     return prev7DaysDeathsIncDecPercent[0]
 
 def getVaccinationsSecondDosePercentage():
@@ -46,10 +54,14 @@ def getDailyHospitalAdmissions():
 
 def getHospitalAdmissions7DaysIncDec():
     prev7DaysAdmissionsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    if not prev7DaysAdmissionsIncDec:
+        return 0
     return prev7DaysAdmissionsIncDec[0]
 
 def getHospitalAdmissions7DaysIncDecPercentage():
     prev7DaysAdmissionsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    if not prev7DaysAdmissionsIncDecPercent:
+        return 0
     return prev7DaysAdmissionsIncDecPercent[0]
 
 def getDashboardAnnouncementsBanner():
@@ -78,5 +90,7 @@ def getDashboardLastUpdate():
     finalTimeStamp = datetime.datetime.strftime(parsedISOTimestamp, "%d/%m/%Y at %H:%M (GMT)")
     return finalTimeStamp
 
-#Example
-print(getDashboardLastUpdate())
+#print("Daily cases: {} -- +/-{} cases {}".format(getDailyCases(), getCases7DaysIncDec(), getCases7DaysIncDecPercentage()))
+#print("Daily deaths: {} -- +/-{} deaths {}".format(getDailyDeaths(), getDeaths7DaysIncDec(), getDeaths7DaysIncDecPercentage()))
+#print("Daily hospital admissions: {} -- +/-{} admissions {}".format(getDailyHospitalAdmissions(), getHospitalAdmissions7DaysIncDec(), getHospitalAdmissions7DaysIncDecPercentage()))
+#print("Last updated: {}".format(getDashboardLastUpdate()))
