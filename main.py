@@ -52,6 +52,10 @@ def getVaccinationsSecondDosePercentage():
     vaccinationSDPercentage = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
     return vaccinationSDPercentage[0]
 
+def getVaccinationsBoosterPercetnage():
+    vaccinationBoosterPercentage = tree.xpath('//*[@id="main-content"]/article[1]/ul/li[1]/figure/figcaption/ul/li[3]/div[1]/div/div/div/span/text()')
+    return vaccinationBoosterPercentage[0]
+
 def getDailyHospitalAdmissions():
     admissionsDaily = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
     return admissionsDaily[0]
@@ -99,4 +103,5 @@ def getDashboardLastUpdate():
 print("Daily cases: {} - ±{} cases {} from previous 7 days".format(getDailyCases(), getCases7DaysIncDec(), getCases7DaysIncDecPercentage()))
 print("Daily deaths: {} - ±{} deaths {} from previous 7 days".format(getDailyDeaths(), getDeaths7DaysIncDec(), getDeaths7DaysIncDecPercentage()))
 print("Daily hospital admissions: {} - ±{} admissions {} from previous 7 days".format(getDailyHospitalAdmissions(), getHospitalAdmissions7DaysIncDec(), getHospitalAdmissions7DaysIncDecPercentage()))
+print("Vaccinations: {} second dose, {} third dose/booster".format(getVaccinationsSecondDosePercentage(), getVaccinationsBoosterPercetnage()))
 print("Last updated: {} - Source: https://coronavirus.data.gov.uk/".format(getDashboardLastUpdate()))
