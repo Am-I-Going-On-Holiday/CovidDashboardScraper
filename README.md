@@ -28,6 +28,8 @@ Contact: p2533140@my365.dmu.ac.uk // dom@dominic.sk
 
 `getVaccinationsSecondDosePercentage()` - Returns the percentage total of the UK population (persons aged 12+) that has received a second dose/completed 1 full course of vaccination (i.e. J&J)
 
+`getVaccinationsBoosterPercetnage()` - Returns the percentage total of the UK population (persons aged 12+) that has received a third dose/booster
+
 **Hospital Admissions Data**
 
 `getDailyHospitalAdmissions()` - Returns the number of hospital admissions related to COVID-19 over the last 24 hour period
