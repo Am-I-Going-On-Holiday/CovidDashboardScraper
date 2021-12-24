@@ -3,87 +3,88 @@ import requests
 import datetime
 import iso8601
 
-scraperHeaders = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Referer": "gov.uk"
-}
-
-scraperEndpoint = requests.get('https://coronavirus.data.gov.uk/', headers=scraperHeaders)
-tree = html.fromstring(scraperEndpoint.content)
+def initScraper():
+    scraperHeaders = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "Referer": "gov.uk"
+    }
+    scraperEndpoint = requests.get('https://coronavirus.data.gov.uk/', headers=scraperHeaders)
+    tree = html.fromstring(scraperEndpoint.content)
+    return tree
 
 def getDailyCases():
-    casesDaily = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
+    casesDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
     return casesDaily[0]
 
 def getCases7DaysIncDec():
-    prev7DaysCasesIncDec = tree.xpath('//*[@id="main-content"]/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysCasesIncDec = initScraper().xpath('//*[@id="main-content"]/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in cases increase/decrease
     if not prev7DaysCasesIncDec:
         return 0
     return prev7DaysCasesIncDec[0]
 
 def getCases7DaysIncDecPercentage():
-    prev7DaysCasesIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysCasesIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     # Return 0 if there is no change in cases increase/decrease percentage
     if not prev7DaysCasesIncDecPercent:
         return 0
     return prev7DaysCasesIncDecPercent[0]
 
 def getDailyDeaths():
-    deathsDaily = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
+    deathsDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
     return deathsDaily[0]
 
 def getDeaths7DaysIncDec():
-    prev7DaysDeathsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysDeathsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in deaths increase/decrease
     if not prev7DaysDeathsIncDec:
         return 0
     return prev7DaysDeathsIncDec[0]
 
 def getDeaths7DaysIncDecPercentage():
-    prev7DaysDeathsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysDeathsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     # Return 0 if there is no change in deaths increase/decrease percentage
     if not prev7DaysDeathsIncDecPercent:
         return 0
     return prev7DaysDeathsIncDecPercent[0]
 
 def getVaccinationsSecondDosePercentage():
-    vaccinationSDPercentage = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
+    vaccinationSDPercentage = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
     return vaccinationSDPercentage[0]
 
 def getVaccinationsBoosterPercetnage():
-    vaccinationBoosterPercentage = tree.xpath('//*[@id="main-content"]/article[1]/ul/li[1]/figure/figcaption/ul/li[3]/div[1]/div/div/div/span/text()')
+    vaccinationBoosterPercentage = initScraper().xpath('//*[@id="main-content"]/article[1]/ul/li[1]/figure/figcaption/ul/li[3]/div[1]/div/div/div/span/text()')
     return vaccinationBoosterPercentage[0]
 
 def getDailyHospitalAdmissions():
-    admissionsDaily = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
+    admissionsDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
     return admissionsDaily[0]
 
 def getHospitalAdmissions7DaysIncDec():
-    prev7DaysAdmissionsIncDec = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysAdmissionsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in admissions increase/decrease
     if not prev7DaysAdmissionsIncDec:
         return 0
     return prev7DaysAdmissionsIncDec[0]
 
 def getHospitalAdmissions7DaysIncDecPercentage():
-    prev7DaysAdmissionsIncDecPercent = tree.xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     # Return 0 if there is no change in admissions increase/decrease percentage
     if not prev7DaysAdmissionsIncDecPercent:
         return 0
     return prev7DaysAdmissionsIncDecPercent[0]
 
 def getDashboardAnnouncementsBanner():
-    dashboardAnnouncementIssueType = tree.xpath('/html/body/ul/li/div/strong/text()')
+    dashboardAnnouncementIssueType = initScraper().xpath('/html/body/ul/li/div/strong/text()')
 
     # If there are no banner announcements, return none
     if not dashboardAnnouncementIssueType:
         dashboardAnnouncement = None
         return dashboardAnnouncement
 
-    dashboardAnnouncementDate = tree.xpath('/html/body/ul/li/div/time/text()')
-    dashboardAnnouncementText = tree.xpath('/html/body/ul/li/div/text()')
+    dashboardAnnouncementDate = initScraper().xpath('/html/body/ul/li/div/time/text()')
+    dashboardAnnouncementText = initScraper().xpath('/html/body/ul/li/div/text()')
 
     # If the announcement does not relate to a data issue, return none
     if dashboardAnnouncementIssueType[0] != "data issue":
@@ -94,14 +95,14 @@ def getDashboardAnnouncementsBanner():
         return dashboardAnnouncement
 
 def getDashboardLastUpdate():
-    dashboardLastUpdateTimeStamp = tree.xpath('//*[@id="last-update"]/time/@datetime')
+    dashboardLastUpdateTimeStamp = initScraper().xpath('//*[@id="last-update"]/time/@datetime')
     timestamp = dashboardLastUpdateTimeStamp[0]
     parsedISOTimestamp = iso8601.parse_date(timestamp)
     finalTimeStamp = datetime.datetime.strftime(parsedISOTimestamp, "%d/%m/%Y at %H:%M (GMT)")
     return finalTimeStamp
 
-print("Daily cases: {} - ±{} cases {} from previous 7 days".format(getDailyCases(), getCases7DaysIncDec(), getCases7DaysIncDecPercentage()))
-print("Daily deaths: {} - ±{} deaths {} from previous 7 days".format(getDailyDeaths(), getDeaths7DaysIncDec(), getDeaths7DaysIncDecPercentage()))
-print("Daily hospital admissions: {} - ±{} admissions {} from previous 7 days".format(getDailyHospitalAdmissions(), getHospitalAdmissions7DaysIncDec(), getHospitalAdmissions7DaysIncDecPercentage()))
-print("Vaccinations: {} second dose, {} third dose/booster".format(getVaccinationsSecondDosePercentage(), getVaccinationsBoosterPercetnage()))
-print("Last updated: {} - Source: https://coronavirus.data.gov.uk/".format(getDashboardLastUpdate()))
+print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
+print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
+print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
+print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercetnage()} third dose/booster")
+print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
