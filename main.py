@@ -53,7 +53,7 @@ def getVaccinationsSecondDosePercentage():
     vaccinationSDPercentage = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
     return vaccinationSDPercentage[0]
 
-def getVaccinationsBoosterPercetnage():
+def getVaccinationsBoosterPercentage():
     vaccinationBoosterPercentage = initScraper().xpath('//*[@id="main-content"]/article[1]/ul/li[1]/figure/figcaption/ul/li[3]/div[1]/div/div/div/span/text()')
     return vaccinationBoosterPercentage[0]
 
@@ -104,5 +104,5 @@ def getDashboardLastUpdate():
 print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
 print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
 print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
-print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercetnage()} third dose/booster")
+print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
 print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
