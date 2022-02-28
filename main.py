@@ -13,13 +13,11 @@ def initScraper():
     tree = html.fromstring(scraperEndpoint.content)
     return tree
 
-
 def addCommas(n):
     return '{:,}'.format(n)
 
 def getDailyCases():
     casesAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newCasesByPublishDate%22:%22newCasesByPublishDate%22,%22cumCasesByPublishDate%22:%22cumCasesByPublishDate%22%7D'
-    # From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
     casesDaily = requests.get(casesAPIEndpoint).json()['data'][0]['newCasesByPublishDate']
     return addCommas(casesDaily)
 
@@ -39,7 +37,6 @@ def getCases7DaysIncDecPercentage():
 
 def getDailyDeaths():
     deathsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newDeaths28DaysByDeathDate%22:%22newDeaths28DaysByDeathDate%22,%22cumDeaths28DaysByDeathDate%22:%22cumDeaths28DaysByDeathDate%22%7D'
-    # From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
     deathsDaily = requests.get(deathsAPIEndpoint).json()['data'][0]['newDeaths28DaysByDeathDate']
     return addCommas(deathsDaily)
 
@@ -67,7 +64,6 @@ def getVaccinationsBoosterPercentage():
 
 def getDailyHospitalAdmissions():
     admissionsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newAdmissions%22:%22newAdmissions%22,%22cumAdmissions%22:%22cumAdmissions%22%7D'
-    #From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
     admissionsDaily = requests.get(admissionsAPIEndpoint).json()['data'][0]['newAdmissions']
     return addCommas(admissionsDaily)
 
