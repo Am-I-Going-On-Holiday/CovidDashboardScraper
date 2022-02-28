@@ -13,37 +13,45 @@ def initScraper():
     tree = html.fromstring(scraperEndpoint.content)
     return tree
 
+
+def addCommas(n):
+    return '{:,}'.format(n)
+
 def getDailyCases():
-    casesDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
-    return casesDaily[0]
+    casesAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newCasesByPublishDate%22:%22newCasesByPublishDate%22,%22cumCasesByPublishDate%22:%22cumCasesByPublishDate%22%7D'
+    # From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
+    casesDaily = requests.get(casesAPIEndpoint).json()['data'][0]['newCasesByPublishDate']
+    return addCommas(casesDaily)
 
 def getCases7DaysIncDec():
-    prev7DaysCasesIncDec = initScraper().xpath('//*[@id="main-content"]/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysCasesIncDec = initScraper().xpath('//*[@id="main-content"]/article[1]/ul/li[2]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in cases increase/decrease
     if not prev7DaysCasesIncDec:
         return 0
     return prev7DaysCasesIncDec[0]
 
 def getCases7DaysIncDecPercentage():
-    prev7DaysCasesIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysCasesIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in cases increase/decrease percentage
     if not prev7DaysCasesIncDecPercent:
         return 0
     return prev7DaysCasesIncDecPercent[0]
 
 def getDailyDeaths():
-    deathsDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
-    return deathsDaily[0]
+    deathsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newDeaths28DaysByDeathDate%22:%22newDeaths28DaysByDeathDate%22,%22cumDeaths28DaysByDeathDate%22:%22cumDeaths28DaysByDeathDate%22%7D'
+    # From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
+    deathsDaily = requests.get(deathsAPIEndpoint).json()['data'][0]['newDeaths28DaysByDeathDate']
+    return addCommas(deathsDaily)
 
 def getDeaths7DaysIncDec():
-    prev7DaysDeathsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysDeathsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in deaths increase/decrease
     if not prev7DaysDeathsIncDec:
         return 0
     return prev7DaysDeathsIncDec[0]
 
 def getDeaths7DaysIncDecPercentage():
-    prev7DaysDeathsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysDeathsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in deaths increase/decrease percentage
     if not prev7DaysDeathsIncDecPercent:
         return 0
@@ -58,18 +66,21 @@ def getVaccinationsBoosterPercentage():
     return vaccinationBoosterPercentage[0]
 
 def getDailyHospitalAdmissions():
-    admissionsDaily = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[1]/div[2]/div/div/div/span[1]/text()')
-    return admissionsDaily[0]
+    admissionsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newAdmissions%22:%22newAdmissions%22,%22cumAdmissions%22:%22cumAdmissions%22%7D'
+    #From the JSON data, get the latest 'newAdmissions' value (nested dictionary)
+    admissionsDaily = requests.get(admissionsAPIEndpoint).json()['data'][0]['newAdmissions']
+    return addCommas(admissionsDaily)
 
 def getHospitalAdmissions7DaysIncDec():
-    prev7DaysAdmissionsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/strong/text()')
+    prev7DaysAdmissionsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in admissions increase/decrease
     if not prev7DaysAdmissionsIncDec:
         return 0
     return prev7DaysAdmissionsIncDec[0]
 
 def getHospitalAdmissions7DaysIncDecPercentage():
-    prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    #prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
+    prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in admissions increase/decrease percentage
     if not prev7DaysAdmissionsIncDecPercent:
         return 0
@@ -101,8 +112,9 @@ def getDashboardLastUpdate():
     finalTimeStamp = datetime.datetime.strftime(parsedISOTimestamp, "%d/%m/%Y at %H:%M (GMT)")
     return finalTimeStamp
 
-print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
-print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
-print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
-print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
-print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
+#print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
+#print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
+#print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
+#print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
+#print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
+#print(getDashboardAnnouncementsBanner())
