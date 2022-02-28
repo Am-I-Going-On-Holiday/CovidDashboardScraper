@@ -75,7 +75,6 @@ def getHospitalAdmissions7DaysIncDec():
     return prev7DaysAdmissionsIncDec[0]
 
 def getHospitalAdmissions7DaysIncDecPercentage():
-    #prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[3]/div/div/span/b/span/text()')
     prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in admissions increase/decrease percentage
     if not prev7DaysAdmissionsIncDecPercent:
