@@ -3,12 +3,13 @@ import requests
 import datetime
 import iso8601
 
+scraperHeaders = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Referer": "gov.uk"
+}
+
 def initScraper():
-    scraperHeaders = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "Referer": "gov.uk"
-    }
     scraperEndpoint = requests.get('https://coronavirus.data.gov.uk/', headers=scraperHeaders)
     tree = html.fromstring(scraperEndpoint.content)
     return tree
@@ -18,7 +19,7 @@ def addCommas(n):
 
 def getDailyCases():
     casesAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newCasesByPublishDate%22:%22newCasesByPublishDate%22,%22cumCasesByPublishDate%22:%22cumCasesByPublishDate%22%7D'
-    casesDaily = requests.get(casesAPIEndpoint).json()['data'][0]['newCasesByPublishDate']
+    casesDaily = requests.get(casesAPIEndpoint, headers=scraperHeaders).json()['data'][0]['newCasesByPublishDate']
     return addCommas(casesDaily)
 
 def getCases7DaysIncDec():
@@ -37,7 +38,7 @@ def getCases7DaysIncDecPercentage():
 
 def getDailyDeaths():
     deathsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newDeaths28DaysByDeathDate%22:%22newDeaths28DaysByDeathDate%22,%22cumDeaths28DaysByDeathDate%22:%22cumDeaths28DaysByDeathDate%22%7D'
-    deathsDaily = requests.get(deathsAPIEndpoint).json()['data'][0]['newDeaths28DaysByDeathDate']
+    deathsDaily = requests.get(deathsAPIEndpoint, headers=scraperHeaders).json()['data'][0]['newDeaths28DaysByDeathDate']
     return addCommas(deathsDaily)
 
 def getDeaths7DaysIncDec():
@@ -64,7 +65,7 @@ def getVaccinationsBoosterPercentage():
 
 def getDailyHospitalAdmissions():
     admissionsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newAdmissions%22:%22newAdmissions%22,%22cumAdmissions%22:%22cumAdmissions%22%7D'
-    admissionsDaily = requests.get(admissionsAPIEndpoint).json()['data'][0]['newAdmissions']
+    admissionsDaily = requests.get(admissionsAPIEndpoint, headers=scraperHeaders).json()['data'][0]['newAdmissions']
     return addCommas(admissionsDaily)
 
 def getHospitalAdmissions7DaysIncDec():
@@ -112,4 +113,4 @@ def getDashboardLastUpdate():
 #print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
 #print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
 #print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
-#print(getDashboardAnnouncementsBanner())
+#print(f"Dashboard Banner Announcement (if any): {getDashboardAnnouncementsBanner()}")
