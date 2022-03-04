@@ -37,8 +37,8 @@ def getCases7DaysIncDecPercentage():
     return prev7DaysCasesIncDecPercent[0]
 
 def getDailyDeaths():
-    deathsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure=%7B%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newDeaths28DaysByDeathDate%22:%22newDeaths28DaysByDeathDate%22,%22cumDeaths28DaysByDeathDate%22:%22cumDeaths28DaysByDeathDate%22%7D'
-    deathsDaily = requests.get(deathsAPIEndpoint, headers=scraperHeaders).json()['data'][0]['newDeaths28DaysByDeathDate']
+    deathsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure={%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22newDeaths28DaysByPublishDate%22:%22newDeaths28DaysByPublishDate%22,%22cumDeaths28DaysByPublishDate%22:%22cumDeaths28DaysByPublishDate%22}'
+    deathsDaily = requests.get(deathsAPIEndpoint, headers=scraperHeaders).json()['data'][0]['newDeaths28DaysByPublishDate']
     return addCommas(deathsDaily)
 
 def getDeaths7DaysIncDec():
