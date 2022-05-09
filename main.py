@@ -2,6 +2,7 @@ from lxml import html
 import requests
 import datetime
 import iso8601
+import time
 
 scraperHeaders = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
@@ -82,6 +83,11 @@ def getHospitalAdmissions7DaysIncDecPercentage():
         return 0
     return prev7DaysAdmissionsIncDecPercent[0]
 
+def getDailyHopsitalOccupiedMVBeds():
+    occupiedMVBedsAPIEndpoint = 'https://coronavirus.data.gov.uk/api/v1/data?filters=areaType=overview&structure={%22date%22:%22date%22,%22areaName%22:%22areaName%22,%22covidOccupiedMVBeds%22:%22covidOccupiedMVBeds%22}'
+    occupiedMVBedsDaily = requests.get(occupiedMVBedsAPIEndpoint, headers=scraperHeaders).json()['data'][0]['covidOccupiedMVBeds']
+    return addCommas(occupiedMVBedsDaily)
+
 def getDashboardAnnouncementsBanner():
     dashboardAnnouncementIssueType = initScraper().xpath('/html/body/ul/li/div/strong/text()')
 
@@ -102,15 +108,26 @@ def getDashboardAnnouncementsBanner():
         return dashboardAnnouncement
 
 def getDashboardLastUpdate():
+
+    def checkBST():
+        return bool(time.localtime().tm_isdst)
+
     dashboardLastUpdateTimeStamp = initScraper().xpath('//*[@id="last-update"]/time/@datetime')
     timestamp = dashboardLastUpdateTimeStamp[0]
     parsedISOTimestamp = iso8601.parse_date(timestamp)
-    finalTimeStamp = datetime.datetime.strftime(parsedISOTimestamp, "%d/%m/%Y at %H:%M (GMT)")
-    return finalTimeStamp
 
-#print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
-#print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
-#print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
-#print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
-#print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
-#print(f"Dashboard Banner Announcement (if any): {getDashboardAnnouncementsBanner()}")
+    # If BST is in effect, add 1 hour to the timestamp (hacky timezone fix)
+    if checkBST() is True:
+        parsedISOTimestamp = parsedISOTimestamp + datetime.timedelta(hours=1)
+        return parsedISOTimestamp.strftime("%d/%m/%Y at %H:%M (GMT)")
+
+    return parsedISOTimestamp.strftime("%d/%m/%Y at %H:%M (GMT)")
+
+print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
+print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
+print(f"Daily hospital admissions: {getDailyHospitalAdmissions()} - ±{getHospitalAdmissions7DaysIncDec()} admissions {getHospitalAdmissions7DaysIncDecPercentage()} from previous 7 days")
+print(f"Daily hospital occupied MV beds: {getDailyHopsitalOccupiedMVBeds()}")
+print(f"Vaccinations: {getVaccinationsSecondDosePercentage()} second dose, {getVaccinationsBoosterPercentage()} third dose/booster")
+print(f"Last updated: {getDashboardLastUpdate()} - Source: https://coronavirus.data.gov.uk/")
+print(f"Dashboard Banner Announcement (if any): {getDashboardAnnouncementsBanner()}")
+print(f"{getDashboardLastUpdate()}")
