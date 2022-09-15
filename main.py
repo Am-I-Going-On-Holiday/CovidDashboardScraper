@@ -42,7 +42,7 @@ def getCases7DaysIncDec():
 
 """ Scraper function: Get the 7 day increase/decrease percentage in cases """
 def getCases7DaysIncDecPercentage():
-    prev7DaysCasesIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[2]/div/div/span/b/span/text()')
+    prev7DaysCasesIncDecPercent = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[2]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in cases increase/decrease percentage
     if not prev7DaysCasesIncDecPercent:
         return 0
@@ -56,7 +56,7 @@ def getDailyDeaths():
 
 """ Scraper function: Get the 7 day increase/decrease in deaths """
 def getDeaths7DaysIncDec():
-    prev7DaysDeathsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
+    prev7DaysDeathsIncDec = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in deaths increase/decrease
     if not prev7DaysDeathsIncDec:
         return 0
@@ -64,7 +64,7 @@ def getDeaths7DaysIncDec():
 
 """ Scraper function: Get the 7 day increase/decrease percentage in deaths """
 def getDeaths7DaysIncDecPercentage():
-    prev7DaysDeathsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/text()')
+    prev7DaysDeathsIncDecPercent = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[3]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in deaths increase/decrease percentage
     if not prev7DaysDeathsIncDecPercent:
         return 0
@@ -72,7 +72,7 @@ def getDeaths7DaysIncDecPercentage():
 
 """ Scraper function: Get the vaccine second dose percentage """
 def getVaccinationsSecondDosePercentage():
-    vaccinationSDPercentage = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
+    vaccinationSDPercentage = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[1]/figure/figcaption/ul/li[2]/div[1]/div/div/div/span/text()')
     return vaccinationSDPercentage[0]
 
 """ Scraper function: Get the vaccine booster dose percentage """
@@ -88,7 +88,7 @@ def getDailyHospitalAdmissions():
 
 """ Scraper function: Get the 7 day increase/decrease in hospital admissions """
 def getHospitalAdmissions7DaysIncDec():
-    prev7DaysAdmissionsIncDec = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
+    prev7DaysAdmissionsIncDec = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/strong/text()')
     # Return 0 if there is no change in admissions increase/decrease
     if not prev7DaysAdmissionsIncDec:
         return 0
@@ -96,7 +96,7 @@ def getHospitalAdmissions7DaysIncDec():
 
 """ Scraper function: Get the 7 day increase/decrease percentage in hospital admissions """
 def getHospitalAdmissions7DaysIncDecPercentage():
-    prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[4]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/text()')
+    prev7DaysAdmissionsIncDecPercent = initScraper().xpath('/html/body/div[5]/div[2]/div/main/article[1]/ul/li[4]/div[1]/ul/li[2]/div/div/span/b/span/text()')
     # Return 0 if there is no change in admissions increase/decrease percentage
     if not prev7DaysAdmissionsIncDecPercent:
         return 0
@@ -147,7 +147,7 @@ def getDashboardLastUpdate():
     return parsedISOTimestamp.strftime("%d/%m/%Y at %H:%M (GMT)")
 
 
-""" Uncomment lines below and test it out - as of June 2022, data is now reported for England only """
+""" Uncomment lines below and test it out - as of August 2022, data is now reported once a week """
 
 #print(f"Daily cases: {getDailyCases()} - ±{getCases7DaysIncDec()} cases {getCases7DaysIncDecPercentage()} from previous 7 days")
 #print(f"Daily deaths: {getDailyDeaths()} - ±{getDeaths7DaysIncDec()} deaths {getDeaths7DaysIncDecPercentage()} from previous 7 days")
