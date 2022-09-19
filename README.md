@@ -2,7 +2,7 @@
 
 Python XPath scraper for https://coronavirus.data.gov.uk/ - Functions in this script are used in the application backend
 
-Contact: p2533140@my365.dmu.ac.uk // dom@dominic.sk
+Contact: dom [at] dominic [dot] sk
 
 ***
 
@@ -37,6 +37,8 @@ Contact: p2533140@my365.dmu.ac.uk // dom@dominic.sk
 `getHospitalAdmissions7DaysIncDec()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days
 
 `getHospitalAdmissions7DaysIncDecPercentage()` - Returns the increase/decrease in COVID-19 related hospital admissions over the last 7 days as a percentage
+
+`getDailyHopsitalOccupiedMVBeds()` - Returns the number of occupied mechanical ventilator beds in the last 24 hours
 
 **Dashboard Misc.**
 
