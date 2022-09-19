@@ -125,7 +125,7 @@ def getDashboardAnnouncementsBanner():
         dashboardAnnouncement = None
         return dashboardAnnouncement
     else:
-        dashboardAnnouncement = "{}: {}{}".format(dashboardAnnouncementIssueType[0].capitalize(), dashboardAnnouncementDate[0], dashboardAnnouncementText[0])
+        dashboardAnnouncement = f"{dashboardAnnouncementIssueType[0].capitalize()}: {dashboardAnnouncementDate[0]}{dashboardAnnouncementText[0]}"
         return dashboardAnnouncement
 
 """ Function to convert the timestamp from ISO8601 (i.e. 2022-05-19T22:56:36Z -> 19/05/2022 22:56:36 -> 19/05/2022 at 22:56 (GMT) ) """
